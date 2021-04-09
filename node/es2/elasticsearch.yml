@@ -1,4 +1,7 @@
 network.bind_host: 0.0.0.0
+network.publish_host: 192.168.20.106
+http.port: 9201
+transport.tcp.port: 9301
 cluster.name: elasticsearch_cluster
 cluster.routing.allocation.disk.threshold_enabled: false
 node.name: node2
@@ -6,6 +9,5 @@ node.master: false
 node.data: true
 http.cors.enabled: true
 http.cors.allow-origin: "*"
-network.host: 0.0.0.0
 discovery.zen.minimum_master_nodes: 1
-discovery.zen.ping.unicast.hosts: es1
+discovery.zen.ping.unicast.hosts: ["192.168.20.106:9300","192.168.20.106:9301","192.168.20.106:9302"]
