@@ -14,6 +14,10 @@ elasticsearch/
     │   ├── data
     │   └── elasticsearch.yml
     └── es2
+    │   ├── data
+    │   └── elasticsearch.yml
+	│	
+	└── es3
         ├── data
         └── elasticsearch.yml
 
@@ -43,6 +47,23 @@ network.bind_host: 0.0.0.0
 cluster.name: elasticsearch_cluster
 cluster.routing.allocation.disk.threshold_enabled: false
 node.name: node2
+node.master: false
+node.data: true
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+network.host: 0.0.0.0
+discovery.zen.minimum_master_nodes: 1
+discovery.zen.ping.unicast.hosts: es1
+```
+
+### 从节点elasticsearch.yml配置文件
+elasticsearch/node/es3/elasticsearch.yml
+
+```
+network.bind_host: 0.0.0.0
+cluster.name: elasticsearch_cluster
+cluster.routing.allocation.disk.threshold_enabled: false
+node.name: node3
 node.master: false
 node.data: true
 http.cors.enabled: true
@@ -97,6 +118,7 @@ services:
         links:
            - elasticsearch-central:elasticsearch
 ```
+### 分词插件
 
 ### 配置head
 - 下载elasticsearch-head

@@ -6,6 +6,8 @@ services:
         volumes:
            - /opt/modules/elasticsearch/node/es1/data:/usr/share/elasticsearch/data 
            - /opt/modules/elasticsearch/node/es1/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+           - /opt/modules/elasticsearch/node/es1/char_filter_text.txt:/usr/share/elasticsearch/config/char_filter_text.txt
+           - /opt/modules/elasticsearch/node/es1/plugins:/usr/share/elasticsearch/plugins
         environment:
            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
            - ES_CLUSTERNAME=elasticsearch
@@ -13,12 +15,14 @@ services:
         ports:
            - "9200:9200"
            - "9300:9300"
-    elasticsearch-data:
+    elasticsearch-data1:
         image: elasticsearch:5.6.4
         container_name: es2
         volumes:
            - /opt/modules/elasticsearch/node/es2/data:/usr/share/elasticsearch/data
            - /opt/modules/elasticsearch/node/es2/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+           - /opt/modules/elasticsearch/node/es2/char_filter_text.txt:/usr/share/elasticsearch/config/char_filter_text.txt
+           - /opt/modules/elasticsearch/node/es2/plugins:/usr/share/elasticsearch/plugins
         environment:
            - bootstrap.memory_lock=true
            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
@@ -27,6 +31,24 @@ services:
         ports:
            - "9201:9200"
            - "9301:9300"
+        links:
+           - elasticsearch-central:elasticsearch
+    elasticsearch-data2:
+        image: elasticsearch:5.6.4
+        container_name: es3
+        volumes:
+           - /opt/modules/elasticsearch/node/es3/data:/usr/share/elasticsearch/data
+           - /opt/modules/elasticsearch/node/es3/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+           - /opt/modules/elasticsearch/node/es3/char_filter_text.txt:/usr/share/elasticsearch/config/char_filter_text.txt
+           - /opt/modules/elasticsearch/node/es3/plugins:/usr/share/elasticsearch/plugins
+        environment:
+           - bootstrap.memory_lock=true
+           - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+           - ES_CLUSTERNAME=elasticsearch
+        command: elasticsearch
+        ports:
+           - "9202:9200"
+           - "9302:9300"
         links:
            - elasticsearch-central:elasticsearch
     elasticsearch-head:
